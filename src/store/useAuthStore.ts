@@ -14,7 +14,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, callback?: () => void) => Promise<void>;
   logout: () => void;
   setError: (error: string | null) => void;
   setLoading: (isLoading: boolean) => void;
@@ -29,9 +29,10 @@ const useAuthStore = create<AuthState>()(
       isLoading: false,
       error: null,
 
-      login: async (email: string, password: string) => {
+      login: async (email: string, password: string, callback?: () => void) => {
         try {
           set({ isLoading: true, error: null });
+          
           // TODO: Replace with your actual API call
           const response = await fetch('/api/auth/login', {
             method: 'POST',
@@ -52,6 +53,8 @@ const useAuthStore = create<AuthState>()(
             isAuthenticated: true,
             isLoading: false,
           });
+          
+          callback?.();
         } catch (error) {
           set({
             error: error instanceof Error ? error.message : 'An error occurred',
