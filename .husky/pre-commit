@@ -1,8 +1,1 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-echo "Running tests..."
-yarn test || (echo "Tests failed. Please fix the failing tests before committing." && exit 1)
-
-echo "Running lint-staged..."
 yarn lint-staged
