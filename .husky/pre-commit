@@ -1,13 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "🔍 Running pre-commit checks..."
+echo "Running tests..."
+yarn test || (echo "Tests failed. Please fix the failing tests before committing." && exit 1)
 
-echo "🎨 Formatting code..."
-yarn format
-
-echo "🔎 Fixing linting issues..."
-yarn lint:fix
-
-echo "✨ Running lint-staged on staged files..."
+echo "Running lint-staged..."
 yarn lint-staged

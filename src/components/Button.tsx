@@ -1,51 +1,67 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react';
-import { cn, createVariant, createSizeVariant, createStateVariant } from '../utils/cn';
+import { ButtonHTMLAttributes, forwardRef } from "react";
+import { cn, createSizeVariant, createVariant } from "../utils/cn";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "primary" | "secondary" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
   isLoading?: boolean;
 }
 
-const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+const baseStyles =
+  "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
 
 const variants = {
-  primary: 'bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-500',
-  secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500',
-  outline: 'border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-gray-500',
-  ghost: 'hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-gray-500',
+  primary:
+    "bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-500",
+  secondary:
+    "bg-gray-100 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500",
+  outline:
+    "border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-gray-500",
+  ghost: "hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-gray-500",
 };
 
 const sizes = {
-  sm: 'h-8 px-3 text-sm',
-  md: 'h-10 px-4',
-  lg: 'h-12 px-8 text-lg',
+  sm: "h-8 px-3 text-sm",
+  md: "h-10 px-4",
+  lg: "h-12 px-8 text-lg",
 };
 
 const states = {
-  loading: 'relative text-transparent transition-none hover:text-transparent',
+  loading: "relative text-transparent transition-none hover:text-transparent",
 };
 
 const getVariant = createVariant(baseStyles, variants);
-const getSize = createSizeVariant('', sizes);
-const getState = createStateVariant('', states);
+const getSize = createSizeVariant("", sizes);
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'md', isLoading, children, ...props }, ref) => {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      className,
+      variant = "primary",
+      size = "md",
+      isLoading,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <button
         className={cn(
           getVariant(variant),
           getSize(size),
-          getState('loading', isLoading),
-          className
+          isLoading ? states.loading : "",
+          className,
         )}
         ref={ref}
         disabled={isLoading}
         {...props}
       >
         {isLoading ? (
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <span
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            role="status"
+          >
             <svg
               className="h-5 w-5 animate-spin text-white"
               xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +87,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 
-Button.displayName = 'Button'; 
+Button.displayName = "Button";
+
+export default Button;

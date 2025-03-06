@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 /**
  * Combines multiple class names and merges Tailwind classes
@@ -18,7 +18,7 @@ export function cn(...inputs: ClassValue[]) {
  */
 export function createVariant<T extends Record<string, string>>(
   base: string,
-  variants: T
+  variants: T,
 ) {
   return (variant: keyof T, additionalClasses?: string) => {
     return cn(base, variants[variant], additionalClasses);
@@ -33,20 +33,22 @@ export function createVariant<T extends Record<string, string>>(
  */
 export function createResponsiveVariant<T extends Record<string, string>>(
   base: string,
-  variants: T
+  variants: T,
 ) {
   return (
     variant: keyof T,
     responsiveClasses?: Record<string, string>,
-    additionalClasses?: string
+    additionalClasses?: string,
   ) => {
     return cn(
       base,
       variants[variant],
-      responsiveClasses && Object.entries(responsiveClasses).map(([breakpoint, classes]) => 
-        `${breakpoint}:${classes}`
-      ),
-      additionalClasses
+      responsiveClasses
+        ? Object.entries(responsiveClasses).map(
+            ([breakpoint, classes]) => `${breakpoint}:${classes}`,
+          )
+        : undefined,
+      additionalClasses,
     );
   };
 }
@@ -59,18 +61,10 @@ export function createResponsiveVariant<T extends Record<string, string>>(
  */
 export function createConditionalVariant<T extends Record<string, string>>(
   base: string,
-  variants: T
+  variants: T,
 ) {
-  return (
-    variant: keyof T,
-    condition: boolean,
-    additionalClasses?: string
-  ) => {
-    return cn(
-      base,
-      condition && variants[variant],
-      additionalClasses
-    );
+  return (variant: keyof T, condition: boolean, additionalClasses?: string) => {
+    return cn(base, condition && variants[variant], additionalClasses);
   };
 }
 
@@ -82,7 +76,7 @@ export function createConditionalVariant<T extends Record<string, string>>(
  */
 export function createSizeVariant<T extends Record<string, string>>(
   base: string,
-  sizes: T
+  sizes: T,
 ) {
   return (size: keyof T, additionalClasses?: string) => {
     return cn(base, sizes[size], additionalClasses);
@@ -97,9 +91,9 @@ export function createSizeVariant<T extends Record<string, string>>(
  */
 export function createStateVariant<T extends Record<string, string>>(
   base: string,
-  states: T
+  states: T,
 ) {
   return (state: keyof T, additionalClasses?: string) => {
     return cn(base, states[state], additionalClasses);
   };
-} 
+}
