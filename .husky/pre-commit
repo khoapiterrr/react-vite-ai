@@ -2,4 +2,12 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo "🔍 Running pre-commit checks..."
-npx lint-staged
+
+echo "🎨 Formatting code..."
+yarn format
+
+echo "🔎 Fixing linting issues..."
+yarn lint:fix
+
+echo "✨ Running lint-staged on staged files..."
+yarn lint-staged
