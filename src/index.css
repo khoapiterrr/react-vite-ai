@@ -7,11 +7,43 @@
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
   }
+
+  html {
+    font-family: Inter, system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-background-primary text-text-primary;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text-primary font-semibold;
+  }
+
+  p {
+    @apply text-text-secondary;
+  }
+
+  a {
+    @apply text-primary-600 hover:text-primary-700;
+  }
+
+  input, textarea, select {
+    @apply text-text-primary placeholder:text-text-muted;
+  }
+
+  label {
+    @apply text-text-secondary;
+  }
+
+  button {
+    @apply text-text-primary;
+  }
 }
 
 @layer base {
   body {
-    @apply bg-background text-foreground;
+    /* @apply bg-background text-foreground; */
   }
 }
 
@@ -59,7 +91,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  /* background-color: #1a1a1a; */
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -81,5 +113,27 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 text-text-white hover:bg-primary-700;
+  }
+
+  .btn-secondary {
+    @apply bg-background-secondary text-text-primary hover:bg-gray-200;
+  }
+
+  .input-field {
+    @apply border border-gray-300 rounded-md px-3 py-2 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-text-secondary mb-1;
+  }
+
+  .error-text {
+    @apply text-red-500 text-sm mt-1;
   }
 }
